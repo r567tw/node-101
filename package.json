@@ -2,7 +2,7 @@
   "name": "101",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/r567tw/node-101/issues"
   },
-  "homepage": "https://github.com/r567tw/node-101#readme"
+  "homepage": "https://github.com/r567tw/node-101#readme",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "mysql2": "^3.5.2",
+    "sequelize": "^6.32.1"
+  }
 }
