@@ -21,6 +21,6 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-// db.sync().then((res) => console.log(res)).catch((err) => console.log(err));
+db.sync().then((res) => console.log("db sync success")).catch((err) => console.log(err));
 
 app.listen(3000);
