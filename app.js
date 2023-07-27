@@ -16,7 +16,11 @@ const shopRoutes = require('./routes/shop');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-User = require("./models/user")
+const User = require("./models/user")
+const Product = require('./models/product');
+Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
+User.hasMany(Product);
+
 app.use((req, res, next) => {
     User.findByPk(1)
         .then(user => {
