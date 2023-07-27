@@ -16,11 +16,37 @@ const shopRoutes = require('./routes/shop');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+User = require("./models/user")
+app.use((req, res, next) => {
+    User.findByPk(1)
+        .then(user => {
+            req.user = user
+            next()
+        })
+        .catch(err => console.log(err))
+})
+
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-db.sync({ force: true }).then((res) => console.log("db sync success")).catch((err) => console.log(err));
+// Product = require("./models/product")
 
-app.listen(3000);
+db.sync({ force: true })
+    .then((res) => {
+        console.log("db sync success")
+        return User.findByPk(1);
+    })
+    .then((user) => {
+        if (!user) {
+            return User.create({ name: "test", email: "test@test.com" })
+        }
+        return user
+    })
+    .then(user => {
+        console.log("User Create success")
+        app.listen(3000);
+    })
+    .catch((err) => console.log(err));
+
