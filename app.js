@@ -47,7 +47,9 @@ app.use(errorController.get404);
 
 // Product = require("./models/product")
 
-db.sync({ force: true })
+db
+    .sync()
+    // .sync({ force: true })
     .then((res) => {
         console.log("db sync success")
         return User.findByPk(1);
@@ -60,7 +62,12 @@ db.sync({ force: true })
     })
     .then(user => {
         console.log("User Create success")
-        app.listen(3000);
+        return user.createCart();
+
+    }).then(cart => {
+        app.listen(3000, () => {
+            console.log(`App is listening http://localhost:3000`);
+        });
     })
     .catch((err) => console.log(err));
 
