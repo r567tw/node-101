@@ -54,8 +54,8 @@ app.use(errorController.get404);
 // Product = require("./models/product")
 
 db
-    // .sync()
-    .sync({ force: true })
+    .sync()
+    // .sync({ force: true })
     .then((res) => {
         console.log("db sync success")
         return User.findByPk(1);
