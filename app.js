@@ -20,6 +20,8 @@ const User = require("./models/user")
 const Product = require('./models/product');
 const Cart = require("./models/cart")
 const CartItem = require("./models/cart-item")
+const Order = require("./models/order");
+const OrderItem = require("./models/order-item");
 
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Product);
@@ -29,6 +31,10 @@ Cart.belongsTo(User)
 
 Cart.belongsToMany(Product, { through: CartItem })
 Product.belongsToMany(Cart, { through: CartItem })
+
+Order.belongsTo(User)
+User.hasMany(Order)
+Order.belongsToMany(Product, { through: OrderItem })
 
 
 app.use((req, res, next) => {
@@ -48,8 +54,8 @@ app.use(errorController.get404);
 // Product = require("./models/product")
 
 db
-    .sync()
-    // .sync({ force: true })
+    // .sync()
+    .sync({ force: true })
     .then((res) => {
         console.log("db sync success")
         return User.findByPk(1);
