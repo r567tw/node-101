@@ -68,8 +68,8 @@ db
     })
     .then(user => {
         console.log("User Create success")
-        return user.createCart();
-
+        // return user.createCart();
+        return user
     }).then(cart => {
         app.listen(3000, () => {
             console.log(`App is listening http://localhost:3000`);
