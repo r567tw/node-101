@@ -38,42 +38,52 @@ Order.belongsToMany(Product, { through: OrderItem })
 
 
 app.use((req, res, next) => {
-    User.findByPk(1)
-        .then(user => {
-            req.user = user
-            next()
-        })
-        .catch(err => console.log(err))
+    // User.findByPk(1)
+    //     .then(user => {
+    //         req.user = user
+    //         next()
+    //     })
+    //     .catch(err => console.log(err))
 })
 
-app.use('/admin', adminRoutes);
-app.use(shopRoutes);
+// app.use('/admin', adminRoutes);
+// app.use(shopRoutes);
 
 app.use(errorController.get404);
 
 // Product = require("./models/product")
 
-db
-    .sync()
-    // .sync({ force: true })
-    .then((res) => {
-        console.log("db sync success")
-        return User.findByPk(1);
-    })
-    .then((user) => {
-        if (!user) {
-            return User.create({ name: "test", email: "test@test.com" })
-        }
-        return user
-    })
-    .then(user => {
-        console.log("User Create success")
-        // return user.createCart();
-        return user
-    }).then(cart => {
-        app.listen(3000, () => {
-            console.log(`App is listening http://localhost:3000`);
-        });
-    })
-    .catch((err) => console.log(err));
+// Playground MongoDB
+const mongoConnect = require("./util/mongo")
+mongoConnect(client => {
+    console.log(client)
+    app.listen(3000, () => {
+        console.log(`App is listening http://localhost:3000`);
+    });
+})
+
+
+// db
+//     .sync()
+//     // .sync({ force: true })
+//     .then((res) => {
+//         console.log("db sync success")
+//         return User.findByPk(1);
+//     })
+//     .then((user) => {
+//         if (!user) {
+//             return User.create({ name: "test", email: "test@test.com" })
+//         }
+//         return user
+//     })
+//     .then(user => {
+//         console.log("User Create success")
+//         // return user.createCart();
+//         return user
+//     }).then(cart => {
+//         app.listen(3000, () => {
+//             console.log(`App is listening http://localhost:3000`);
+//         });
+//     })
+//     .catch((err) => console.log(err));
 
