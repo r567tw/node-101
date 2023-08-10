@@ -24,4 +24,8 @@ router.post('/create-order', shopController.postOrder);
 
 router.get('/checkout', shopController.getCheckout);
 
+router.get('/tags', tagController.getTag)
+router.post('/tags', tagController.postTag);
+
+
 module.exports = router;

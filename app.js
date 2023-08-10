@@ -44,6 +44,7 @@ app.use((req, res, next) => {
     //         next()
     //     })
     //     .catch(err => console.log(err))
+    next()
 })
 
 // app.use('/admin', adminRoutes);
@@ -54,8 +55,9 @@ app.use(errorController.get404);
 // Product = require("./models/product")
 
 // Playground MongoDB
-const mongoConnect = require("./util/mongo")
-mongoConnect(client => {
+const mongoConnect = require("./util/mongo").mongoConnect
+
+mongoConnect(() => {
     console.log(client)
     app.listen(3000, () => {
         console.log(`App is listening http://localhost:3000`);
