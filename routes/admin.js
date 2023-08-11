@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 
 const adminController = require('../controllers/admin');
+const tagController = require('../controllers/tag');
 
 const router = express.Router();
 
@@ -20,5 +21,8 @@ router.get('/edit-product/:productId', adminController.getEditProduct);
 router.post('/edit-product', adminController.postEditProduct);
 
 router.post('/delete-product', adminController.postDeleteProduct);
+
+router.get('/tags', tagController.getTag)
+router.post('/tags', tagController.postTag);
 
 module.exports = router;

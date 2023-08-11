@@ -1,10 +1,10 @@
-const mongo = require("mongodb")
+const mongodb = require("mongodb")
 
-const client = mongo.MongoClient
+const MongoClient = mongodb.MongoClient;
 let _db
 
 const mongoConnect = callback => {
-    client.connect("mongodb://localhost:27017/shop")
+    MongoClient.connect("mongodb://root:root@localhost:27017")
         .then(client => {
             console.log("Connected")
             _db = client.db();
@@ -20,5 +20,5 @@ const getDb = () => {
     throw "No Database Found"
 }
 
-module.mongoConnect = mongoConnect;
-module.getDb = getDb;
+exports.mongoConnect = mongoConnect;
+exports.getDb = getDb;

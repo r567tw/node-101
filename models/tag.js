@@ -1,5 +1,5 @@
 // use mongo
-const getDb = require("./util/mongo").getDb
+const getDb = require("../util/mongo").getDb
 
 class Tag {
     constructor(title, price, description) {
@@ -10,7 +10,8 @@ class Tag {
 
     save() {
         const db = getDb()
-        db.collection('tags').insertOne(this).then((result) => {
+        return db.collection('tags').insertOne(this).then((result) => {
+            console.log("tag created")
             console.log(result)
         }).catch((err) => {
             console.error(err)

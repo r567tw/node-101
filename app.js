@@ -47,45 +47,38 @@ app.use((req, res, next) => {
     next()
 })
 
-// app.use('/admin', adminRoutes);
-// app.use(shopRoutes);
+app.use('/admin', adminRoutes);
+app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-// Product = require("./models/product")
-
-// Playground MongoDB
 const mongoConnect = require("./util/mongo").mongoConnect
 
-mongoConnect(() => {
-    console.log(client)
-    app.listen(3000, () => {
-        console.log(`App is listening http://localhost:3000`);
-    });
-})
+// Product = require("./models/product")
+db
+    .sync({ force: true })
+    .then((res) => {
+        console.log("db sync success")
+        return User.findByPk(1);
+    })
+    .then((user) => {
+        if (!user) {
+            return User.create({ name: "test", email: "test@test.com" })
+        }
+        return user
+    })
+    .then(user => {
+        console.log("User Create success")
+        // return user.createCart();
+        return user
+    }).then(cart => {
+        mongoConnect(() => {
+            app.listen(3000, () => {
+                console.log(`App is listening http://localhost:3000`);
+            });
+        });
+    })
+    .catch((err) => console.log(err));
 
 
-// db
-//     .sync()
-//     // .sync({ force: true })
-//     .then((res) => {
-//         console.log("db sync success")
-//         return User.findByPk(1);
-//     })
-//     .then((user) => {
-//         if (!user) {
-//             return User.create({ name: "test", email: "test@test.com" })
-//         }
-//         return user
-//     })
-//     .then(user => {
-//         console.log("User Create success")
-//         // return user.createCart();
-//         return user
-//     }).then(cart => {
-//         app.listen(3000, () => {
-//             console.log(`App is listening http://localhost:3000`);
-//         });
-//     })
-//     .catch((err) => console.log(err));
-
+// Playground MongoDB
